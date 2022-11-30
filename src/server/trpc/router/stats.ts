@@ -12,6 +12,9 @@ export const statsRouter = router({
           drill: true,
           player: true,
         },
+        where: {
+          userId: ctx.session.user.id,
+        },
       });
     } catch (error) {
       console.error(error);
@@ -36,6 +39,9 @@ export const statsRouter = router({
             drill: true,
             player: true,
           },
+          where: {
+            userId: ctx.session.user.id,
+          },
         });
       } catch (err) {
         console.error(err);
@@ -58,6 +64,7 @@ export const statsRouter = router({
           createdAt: {
             gte: lastDay,
           },
+          userId: ctx.session.user.id,
         },
         include: {
           drill: true,

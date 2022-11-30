@@ -4,7 +4,11 @@ import { router, protectedProcedure } from "../trpc";
 export const drillsRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {
     try {
-      return await ctx.prisma.drill.findMany();
+      return await ctx.prisma.drill.findMany({
+        where: {
+          userId: ctx.session.user.id,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
