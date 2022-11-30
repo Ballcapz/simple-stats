@@ -1,5 +1,5 @@
 import { Pagination, Table } from "@mantine/core";
-import { Drill, Player, Stat } from "@prisma/client";
+import type { Drill, Player, Stat } from "@prisma/client";
 
 export type PagedTable = {
   page: number;

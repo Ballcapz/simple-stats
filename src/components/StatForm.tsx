@@ -90,7 +90,15 @@ export const FormNew = () => {
     if (!loadingPlayers && players?.length && !selectedPlayer.length) {
       setSelectedDrill(players[0]?.name ?? "");
     }
-  }, [isLoading, loadingPlayers, drills?.length, players?.length]);
+    // @eslint-ignore react-hooks/exhaustive-deps
+  }, [
+    isLoading,
+    loadingPlayers,
+    drills?.length,
+    players?.length,
+    drills,
+    players,
+  ]);
 
   if (isLoading && loadingPlayers) return <div>Fetching data..</div>;
 

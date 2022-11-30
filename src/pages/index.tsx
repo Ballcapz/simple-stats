@@ -1,5 +1,4 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
 import { MyLink } from "../components/MyLink";
 import { FormNew } from "../components/StatForm";
 

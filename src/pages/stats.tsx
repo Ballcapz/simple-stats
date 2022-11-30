@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
-import PagedTable, { MyStat } from "../components/PagedTable";
+import PagedTable, { type MyStat } from "../components/PagedTable";
 import { useState } from "react";
 import { MyLink } from "../components/MyLink";
 
@@ -115,7 +115,7 @@ const Stats = () => {
                   )
                 }
               >
-                Download Today's Stats
+                Download Today&apos;s Stats
               </button>
               <div className="pt-6">
                 <ExistingStats />
