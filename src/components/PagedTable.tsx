@@ -26,7 +26,7 @@ const PagedTable = ({
   return (
     <div className="flex flex-col">
       <Pagination page={page} onChange={setPage} total={totalPages} withEdges />
-      <Table>
+      <Table striped highlightOnHover>
         <thead>
           <tr>
             {tableHeaders.map((thVal, i) => (
@@ -45,6 +45,7 @@ const PagedTable = ({
               <td>{element.rightTakes}</td>
               <td>{element.totalMakes}</td>
               <td>{element.totalTakes}</td>
+              <td>{element.createdAt.toDateString()}</td>
             </tr>
           ))}
         </tbody>

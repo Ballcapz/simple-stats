@@ -33,6 +33,7 @@ const ExistingStats = () => {
         "Takes (R)",
         "Makes (T)",
         "Takes (T)",
+        "Date",
       ]}
     />
   );
@@ -65,6 +66,7 @@ const Stats = () => {
         "Takes (R)",
         "Makes (T)",
         "Takes (T)",
+        "Date",
       ].join(",") + "\n";
     csvContent = csvContent + headerRow;
 
@@ -72,7 +74,7 @@ const Stats = () => {
       const drillName = singleRow.drill.name;
       const playerName = singleRow.player.name;
 
-      const row = `${drillName},${playerName},${singleRow.leftMakes},${singleRow.leftTakes},${singleRow.rightMakes},${singleRow.rightTakes},${singleRow.totalMakes},${singleRow.totalTakes}\n`;
+      const row = `${drillName},${playerName},${singleRow.leftMakes},${singleRow.leftTakes},${singleRow.rightMakes},${singleRow.rightTakes},${singleRow.totalMakes},${singleRow.totalTakes},${singleRow.createdAt}\n`;
       csvContent = csvContent + row;
     });
 
