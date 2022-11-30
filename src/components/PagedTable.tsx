@@ -5,11 +5,11 @@ export type PagedTable = {
   page: number;
   setPage: (num: number) => void;
   totalPages: number;
-  tableData: StatRow;
+  tableData: MyStat;
   tableHeaders: Array<string>;
 };
 
-type StatRow =
+export type MyStat =
   | (Stat & {
       drill: Drill;
       player: Player;

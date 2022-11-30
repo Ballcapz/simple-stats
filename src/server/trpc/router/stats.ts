@@ -59,6 +59,10 @@ export const statsRouter = router({
             gte: lastDay,
           },
         },
+        include: {
+          drill: true,
+          player: true,
+        },
         orderBy: {
           createdAt: "desc",
         },
