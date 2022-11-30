@@ -8,9 +8,44 @@ export const statsRouter = router({
         orderBy: {
           createdAt: "desc",
         },
+        include: {
+          drill: true,
+          player: true,
+        },
       });
     } catch (error) {
       console.error(error);
+    }
+  }),
+  getPaged: protectedProcedure
+    .input(
+      z.object({
+        pageSize: z.number(),
+        currentPage: z.number(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        return ctx.prisma.stat.findMany({
+          orderBy: {
+            createdAt: "desc",
+          },
+          skip: input.pageSize * input.currentPage,
+          take: input.pageSize,
+          include: {
+            drill: true,
+            player: true,
+          },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }),
+  getTotalCount: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      return ctx.prisma.stat.count();
+    } catch (err) {
+      console.error(err);
     }
   }),
   getToday: protectedProcedure.query(async ({ ctx }) => {

@@ -1,5 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { MyLink } from "../components/MyLink";
 import { FormNew } from "../components/StatForm";
 
 const Home = () => {
@@ -26,38 +27,31 @@ const Home = () => {
                 </button>
               </div>
               <div className="flex items-center justify-between">
-                <Link
-                  className="mt-2 mr-1 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
-                  href="/drills"
-                >
-                  Manage Drills
-                </Link>
-                <Link
-                  className="mt-2 ml-1 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
-                  href="/players"
-                >
-                  Manage Players
-                </Link>
+                <MyLink href="/drills">Manage Drills</MyLink>
+                <MyLink href="/players">Manage Players</MyLink>
               </div>
               <div className="my-2 flex items-center justify-center">
-                <Link
-                  className="mt-2 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
-                  href="/stats"
-                >
-                  See Stats Summary
-                </Link>
+                <MyLink href="/stats">See Stats Summary</MyLink>
               </div>
               <div className="pt-2">
                 <FormNew />
               </div>
             </>
           ) : (
-            <button
-              className="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
-              onClick={() => signIn("discord")}
-            >
-              Login with Discord
-            </button>
+            <>
+              <button
+                className="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
+                onClick={() => signIn("discord")}
+              >
+                Login with Discord
+              </button>
+              <button
+                className="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
+                onClick={() => signIn("google")}
+              >
+                Login with Google
+              </button>
+            </>
           )}
         </div>
       </div>

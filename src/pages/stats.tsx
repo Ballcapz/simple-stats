@@ -1,22 +1,41 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { trpc } from "../utils/trpc";
+import PagedTable from "../components/PagedTable";
+import { useState } from "react";
+import { MyLink } from "../components/MyLink";
+
+const PAGE_SIZE = 25;
 
 const ExistingStats = () => {
-  const { data: stats, isLoading } = trpc.stats.getAll.useQuery();
+  const [page, setPage] = useState(0);
 
-  if (isLoading) return <div>Fetching stats...</div>;
+  const { data: stats, isLoading } = trpc.stats.getPaged.useQuery({
+    pageSize: PAGE_SIZE,
+    currentPage: page,
+  });
+  const { data: count, isLoading: countLoading } =
+    trpc.stats.getTotalCount.useQuery();
+
+  if (isLoading && countLoading) return <div>Fetching stats...</div>;
 
   return (
-    <div className="flex flex-col gap-1">
-      {stats?.map((stat) => (
-        <div key={stat.id}>
-          {stat.drillId} - {stat.playerId}: {stat.leftMakes} / {stat.leftTakes}{" "}
-          | {stat.rightMakes} / {stat.rightTakes} | {stat.totalMakes} /{" "}
-          {stat.totalTakes}
-        </div>
-      ))}
-    </div>
+    <PagedTable
+      page={page + 1}
+      setPage={(num) => setPage(num - 1)}
+      totalPages={Math.max(Math.round(count ?? 0 / PAGE_SIZE), 1)}
+      tableData={stats}
+      tableHeaders={[
+        "Drill",
+        "Player",
+        "Makes (L)",
+        "Takes (L)",
+        "Makes (R)",
+        "Takes (R)",
+        "Makes (T)",
+        "Takes (T)",
+      ]}
+    />
   );
 };
 
@@ -34,14 +53,14 @@ const Stats = () => {
         <div>
           {session ? (
             <>
-              <Link href="/">Home</Link>
+              <MyLink href="/">Home</MyLink>
               <div className="pt-6">
                 <h2 className="my-2 text-xl underline">Stat summary:</h2>
                 <ExistingStats />
               </div>
             </>
           ) : (
-            <Link href="/">Home</Link>
+            <MyLink href="/">Home</MyLink>
           )}
         </div>
       </div>

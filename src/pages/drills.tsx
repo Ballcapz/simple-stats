@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { MyLink } from "../components/MyLink";
 import { trpc } from "../utils/trpc";
 
 const ExistingDrills = () => {
@@ -65,7 +66,7 @@ const Drills = () => {
         <div>
           {session ? (
             <>
-              <Link href="/">Home</Link>
+              <MyLink href="/">Home</MyLink>
               <div className="pt-6">
                 <Form />
                 <h2 className="my-2 text-xl underline">Existing drills:</h2>
@@ -73,7 +74,7 @@ const Drills = () => {
               </div>
             </>
           ) : (
-            <Link href="/">Home</Link>
+            <MyLink href="/">Home</MyLink>
           )}
         </div>
       </div>
