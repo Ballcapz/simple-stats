@@ -1,4 +1,4 @@
-import { Pagination, Table } from "@mantine/core";
+import { Pagination, Table, Flex, Stack, Spoiler, Badge } from "@mantine/core";
 import type { Drill, Player, Stat } from "@prisma/client";
 
 export type PagedTable = {
@@ -24,33 +24,44 @@ const PagedTable = ({
   tableHeaders,
 }: PagedTable) => {
   return (
-    <div className="flex flex-col">
-      <Pagination page={page} onChange={setPage} total={totalPages} withEdges />
-      <Table striped highlightOnHover>
-        <thead>
-          <tr>
-            {tableHeaders.map((thVal, i) => (
-              <th key={i}>{thVal}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData?.map((element) => (
-            <tr key={element.id}>
-              <td>{element.drill.name}</td>
-              <td>{element.player.name}</td>
-              <td>{element.leftMakes}</td>
-              <td>{element.leftTakes}</td>
-              <td>{element.rightMakes}</td>
-              <td>{element.rightTakes}</td>
-              <td>{element.totalMakes}</td>
-              <td>{element.totalTakes}</td>
-              <td>{element.createdAt.toDateString()}</td>
+    <Flex gap="sm" justify="center" align="center" direction="column">
+      <Pagination page={page} onChange={setPage} total={totalPages} />
+      <Stack align="center" justify="flex-start" spacing="sm">
+        <Table striped>
+          <thead>
+            <tr>
+              {tableHeaders.map((th, i) => (
+                <th key={i}>{th}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+          </thead>
+          <tbody>
+            {tableData?.map((row) => {
+              const lPercent = Math.round(
+                (row.leftMakes / row.leftTakes) * 100
+              );
+              const rPercent = Math.round(
+                (row.rightMakes / row.rightTakes) * 100
+              );
+              const tPercent = Math.round(
+                (row.totalMakes / row.totalTakes) * 100
+              );
+
+              return (
+                <tr key={row.id}>
+                  <td>{row.drill.name}</td>
+                  <td>{row.player.name}</td>
+                  <td>{isNaN(lPercent) ? "-" : `${lPercent}%`}</td>
+                  <td>{isNaN(rPercent) ? "-" : `${rPercent}%`}</td>
+                  <td>{isNaN(tPercent) ? "-" : `${tPercent}%`}</td>
+                  <td>{row.createdAt.toDateString()}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </Stack>
+    </Flex>
   );
 };
 

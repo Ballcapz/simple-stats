@@ -3,6 +3,7 @@ import { trpc } from "../utils/trpc";
 import PagedTable, { type MyStat } from "../components/PagedTable";
 import { useState } from "react";
 import { MyLink } from "../components/MyLink";
+import { Flex } from "@mantine/core";
 
 const PAGE_SIZE = 25;
 
@@ -24,17 +25,7 @@ const ExistingStats = () => {
       setPage={(num) => setPage(num - 1)}
       totalPages={Math.max(Math.round(count ?? 0 / PAGE_SIZE), 1)}
       tableData={stats}
-      tableHeaders={[
-        "Drill",
-        "Player",
-        "Makes (L)",
-        "Takes (L)",
-        "Makes (R)",
-        "Takes (R)",
-        "Makes (T)",
-        "Takes (T)",
-        "Date",
-      ]}
+      tableHeaders={["Drill", "Player", "L %", "R %", "T %", "Date"]}
     />
   );
 };
@@ -91,32 +82,34 @@ const Stats = () => {
   }
 
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex w-full flex-col items-center">
       <h1 className="pt-4 text-3xl">Stats Summary</h1>
       <div className="pt-10">
-        <div>
+        <>
           {session ? (
             <>
-              <MyLink href="/">Home</MyLink>
-              <button
-                title="Download all stats as a csv"
-                className="mt-2 mr-1 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
-                onClick={() => downloadCsv(allStats, "all_stats.csv")}
-              >
-                Download All Stats
-              </button>
-              <button
-                title="Download stats for the last 24 hours as a csv"
-                className="mt-2 mr-1 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
-                onClick={() =>
-                  downloadCsv(
-                    todaysStat,
-                    `stats_${new Date().toDateString()}.csv`
-                  )
-                }
-              >
-                Download Today&apos;s Stats
-              </button>
+              <Flex wrap="wrap" justify="center">
+                <MyLink href="/">Home</MyLink>
+                <button
+                  title="Download all stats as a csv"
+                  className="mt-2 mr-1 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
+                  onClick={() => downloadCsv(allStats, "all_stats.csv")}
+                >
+                  Download All Stats
+                </button>
+                <button
+                  title="Download stats for the last 24 hours as a csv"
+                  className="mt-2 mr-1 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white duration-150 hover:bg-indigo-700 active:shadow-lg"
+                  onClick={() =>
+                    downloadCsv(
+                      todaysStat,
+                      `stats_${new Date().toDateString()}.csv`
+                    )
+                  }
+                >
+                  Download Today&apos;s Stats
+                </button>
+              </Flex>
               <div className="pt-6">
                 <ExistingStats />
               </div>
@@ -124,7 +117,7 @@ const Stats = () => {
           ) : (
             <MyLink href="/">Home</MyLink>
           )}
-        </div>
+        </>
       </div>
     </main>
   );
