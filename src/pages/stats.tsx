@@ -61,6 +61,8 @@ const Stats = () => {
       ].join(",") + "\n";
     csvContent = csvContent + headerRow;
 
+    console.log("csv header: ", csvContent);
+
     stats?.forEach((singleRow) => {
       const drillName = singleRow.drill.name;
       const playerName = singleRow.player.name;
@@ -68,6 +70,8 @@ const Stats = () => {
       const row = `${drillName},${playerName},${singleRow.leftMakes},${singleRow.leftTakes},${singleRow.rightMakes},${singleRow.rightTakes},${singleRow.totalMakes},${singleRow.totalTakes},${singleRow.createdAt}\n`;
       csvContent = csvContent + row;
     });
+
+    console.log("Including stats: ", csvContent);
 
     const encodedUri = encodeURI(csvContent);
 
@@ -77,8 +81,6 @@ const Stats = () => {
     document.body.appendChild(link); // Required for FF
 
     link.click();
-
-    // document.removeChild(link);
   }
 
   return (
